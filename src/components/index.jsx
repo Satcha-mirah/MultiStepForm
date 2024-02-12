@@ -5,11 +5,19 @@ import Arcade from "../assets/icon-arcade.svg";
 import Advanced from "../assets/icon-advanced.svg";
 import Pro from "../assets/icon-pro.svg";
 import Thanks from "../assets/icon-thank-you.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { updateField } from "../services/redux/formSlice";
+
+
+
 function MultiStepComp({props}){
-    // const toggleTab = (index) => {
-    //     setToggle(index);
-    //   };
-    //   const activeTab = "text-primary  border-primary";
+  const dispatch = useDispatch();
+
+  const form = useSelector((state)=> state.form);
+  console.log(form)
+  const handleFieldChange = (field, value) => {
+    dispatch(updateField({ field, value }));
+  };
     const [formStep, setFormStep] = useState(0);
     const completeFormStep = () => {
     setFormStep((cur) => cur + 1);
@@ -97,6 +105,8 @@ function MultiStepComp({props}){
               </p>
               <input
                 type="text"
+                value={form?.name}
+                onChange={(e)=> handleFieldChange("name", e.target.value)}
                 className="w-[550px] h-[60px] outline-none border-[3px] mt-[5px] rounded-[8px] font-nunito py-[10px] px-[10px] text-[#00356B] text-[18px] font-[600] font-ubuntu focus:border-[#9370DB]"
               />
             </div>
